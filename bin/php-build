@@ -451,12 +451,14 @@ function install_package() {
 
 # ### configure_option
 #
-# This function sets and unsets arguments for `configure`. Pass it
-# the `-D` option to unset the argument given in `$2`. Otherwise
-# the first argument is the name of the option and the second
-# argument contains the optional value.
+# This function manipulates arguments for `configure`. Pass it
+# `-D` - unset an argument
+# `-S` - return 0 if argument was set
+# `-R` - replace an existing argument
+# otherwise, the first argument is the name of the option
+# and the second argument contains the optional value
 function configure_option() {
-    if [ "$1" = "-D" ]; then
+    if [ "$1" = "-D" ] || [ "$1" = "-S" ]; then
         # This variable will contain the filtered arguments.
         local filtered=
 
@@ -465,10 +467,11 @@ function configure_option() {
             # then skip it from concatenation. Otherwise add it to
             # the filtered options.
             case "$option" in
-                "$2"*) ;;
+                "$2"*) [ "$1" = "-S" ] && return 0;;
                 *) filtered="$filtered $option";;
             esac
         done
+        [ "$1" = "-S" ] && return 1
 
         # Trim the leading whitespace added in the concatenation.
         filtered=$(echo "$filtered" | sed -e 's/[ ]*//')

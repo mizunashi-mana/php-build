@@ -570,6 +570,8 @@ function configure_package() {
             [ -e "$(brew --prefix zlib)" ] && configure_option -R "--with-zlib-dir" "$(brew --prefix zlib)"
             [ -e "$(brew --prefix openssl)" ] && configure_option -R "--with-openssl-dir" "$(brew --prefix openssl)"
             [ -e "$(brew --prefix libxml2)" ] && configure_option -R "--with-libxml-dir" "$(brew --prefix libxml2)"
+            [ -e "$(brew --prefix curl)" ] && configure_option -R "--with-curl" "$(brew --prefix curl)"
+            
             [ -e "$(brew --prefix readline)" ] && configure_option -R "--with-readline" "$(brew --prefix readline)"
             [ -e "$(brew --prefix gettext)" ] && configure_option -R "--with-gettext" "$(brew --prefix gettext)"
 

@@ -559,20 +559,19 @@ function configure_package() {
     if is_osx; then
         # Mac OSX stores some libraries (for example `libpng`)
         # in `/usr/X11/lib` instead of `/usr/lib`.
-        #
-        # This currently builds PHP without the `gettext` and `readline`
-        # extensions, as I've currently not got them to work on my machine.
-        configure_option -D "--with-gettext"
-        configure_option -D "--with-readline"
-        configure_option "--with-libedit"
-
         configure_option -R "--with-png-dir" "/usr/X11"
+
+        # This currently builds PHP without the `gettext`
+        # extensions, as I've currently not got it to work on my machine.
+        configure_option -D "--with-gettext"
 
         # Override libraries with homebrew versions
         if [ -n "$(which brew)" ]; then
             [ -e "$(brew --prefix zlib)" ] && configure_option -R "--with-zlib-dir" "$(brew --prefix zlib)"
             [ -e "$(brew --prefix openssl)" ] && configure_option -R "--with-openssl" "$(brew --prefix openssl)"
             [ -e "$(brew --prefix libxml2)" ] && configure_option -R "--with-libxml-dir" "$(brew --prefix libxml2)"
+            [ -e "$(brew --prefix readline)" ] && configure_option -R "--with-readline" "$(brew --prefix readline)"
+            [ -e "$(brew --prefix gettext)" ] && configure_option -R "--with-gettext" "$(brew --prefix gettext)"
 
             if [ -e "$(brew --prefix icu4c)" ]; then
                 configure_option "--with-icu-dir" "$(brew --prefix icu4c)"
@@ -584,6 +583,11 @@ function configure_package() {
                     export CXXFLAGS="-std=c++11 -stdlib=libc++"
                 fi
             fi
+        fi
+
+        # if readline is not specified, then use libedit
+        if ! configure_option -S "--with-readline"; then
+            configure_option "--with-libedit"
         fi
     fi
 

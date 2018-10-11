@@ -566,11 +566,13 @@ function configure_package() {
         log "Warning" "Enabling Zend Thread Safety is meant only for maintainers!"
     fi
 
-    # Override `--with-openssl` and `--with-libxml-dir`
-    # if Homebrew's openssl and libxml2 exist on Mac OS X 10.11+.
-    if is_osx && [ "$(osx_major)" -eq 10 ] && [ "$(osx_minor)" -ge 11 ] && [ -n "$(which brew)" ] && [ -e "$(brew --prefix openssl)" ] && [ -e "$(brew --prefix libxml2)" ]; then
-        configure_option -R "--with-openssl" "$(brew --prefix openssl)"
-        configure_option -R "--with-libxml-dir" "$(brew --prefix libxml2)"
+    # Override libraries with homebrew versions on Mac OS X 10.11+
+    if is_osx && [ "$(osx_major)" -eq 10 ] && [ "$(osx_minor)" -ge 11 ]; then
+        if [ -n "$(which brew)" ]; then
+            [ -e "$(brew --prefix zlib)" ] && configure_option -R "--with-zlib-dir" "$(brew --prefix zlib)"
+            [ -e "$(brew --prefix openssl)" ] && configure_option -R "--with-openssl" "$(brew --prefix openssl)"
+            [ -e "$(brew --prefix libxml2)" ] && configure_option -R "--with-libxml-dir" "$(brew --prefix libxml2)"
+        fi
     fi
 
     if is_osx && [ -n "$(which brew)" ] && [ -e "$(brew --prefix icu4c)" ]; then

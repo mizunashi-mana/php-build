@@ -548,41 +548,39 @@ function configure_package() {
         ./buildconf
     fi
 
-    # Mac OSX stores some libraries (for example `libpng`)
-    # in `/usr/X11/lib` instead of `/usr/lib`.
-    #
-    # This currently builds PHP without the `gettext` and `readline`
-    # extensions, as I've currently not got them to work on my machine.
-    if is_osx; then
-        configure_option -D "--with-gettext"
-        configure_option -D "--with-readline"
-        configure_option "--with-libedit"
-
-        configure_option -R "--with-png-dir" "/usr/X11"
-    fi
-
     if [ "$PHP_BUILD_ZTS_ENABLE" == "on" ]; then
         configure_option "--enable-maintainer-zts"
         log "Warning" "Enabling Zend Thread Safety is meant only for maintainers!"
     fi
 
-    # Override libraries with homebrew versions on Mac OS X 10.11+
-    if is_osx && [ "$(osx_major)" -eq 10 ] && [ "$(osx_minor)" -ge 11 ]; then
+    if is_osx; then
+        # Mac OSX stores some libraries (for example `libpng`)
+        # in `/usr/X11/lib` instead of `/usr/lib`.
+        #
+        # This currently builds PHP without the `gettext` and `readline`
+        # extensions, as I've currently not got them to work on my machine.
+        configure_option -D "--with-gettext"
+        configure_option -D "--with-readline"
+        configure_option "--with-libedit"
+
+        configure_option -R "--with-png-dir" "/usr/X11"
+
+        # Override libraries with homebrew versions
         if [ -n "$(which brew)" ]; then
             [ -e "$(brew --prefix zlib)" ] && configure_option -R "--with-zlib-dir" "$(brew --prefix zlib)"
             [ -e "$(brew --prefix openssl)" ] && configure_option -R "--with-openssl" "$(brew --prefix openssl)"
             [ -e "$(brew --prefix libxml2)" ] && configure_option -R "--with-libxml-dir" "$(brew --prefix libxml2)"
-        fi
-    fi
 
-    if is_osx && [ -n "$(which brew)" ] && [ -e "$(brew --prefix icu4c)" ]; then
-        configure_option "--with-icu-dir" "$(brew --prefix icu4c)"
-        # icu4c 59+ requires C++11
-        if [[ -z "$CXXFLAGS" && $($(brew --prefix icu4c)/bin/icu-config --version) > "61" ]]; then
-            # icu4c 61+ compatability (see #499)
-            export CXXFLAGS="-std=c++11 -stdlib=libc++ -DU_USING_ICU_NAMESPACE=1"
-        elif [[ -z "$CXXFLAGS" && $($(brew --prefix icu4c)/bin/icu-config --version) > "59" ]]; then
-            export CXXFLAGS="-std=c++11 -stdlib=libc++"
+            if [ -e "$(brew --prefix icu4c)" ]; then
+                configure_option "--with-icu-dir" "$(brew --prefix icu4c)"
+                # icu4c 59+ requires C++11
+                if [[ -z "$CXXFLAGS" && $($(brew --prefix icu4c)/bin/icu-config --version) > "61" ]]; then
+                    # icu4c 61+ compatability (see #499)
+                    export CXXFLAGS="-std=c++11 -stdlib=libc++ -DU_USING_ICU_NAMESPACE=1"
+                elif [[ -z "$CXXFLAGS" && $($(brew --prefix icu4c)/bin/icu-config --version) > "59" ]]; then
+                    export CXXFLAGS="-std=c++11 -stdlib=libc++"
+                fi
+            fi
         fi
     fi
 

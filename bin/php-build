@@ -65,6 +65,12 @@ function is_osx {
 
     if [ "$uname" = "Darwin" ]; then
         return 0
+    elif [ "$PHP_BUILD_DEBUG_OSX" ]; then
+        # return true if the OSX debugging variable is set
+        # makes it easier to test OSX functionality outside of OSX
+        return 0
+    fi
+
     else
         return 1
     fi

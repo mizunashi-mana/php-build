@@ -69,8 +69,6 @@ function is_osx {
         # return true if the OSX debugging variable is set
         # makes it easier to test OSX functionality outside of OSX
         return 0
-    fi
-
     else
         return 1
     fi

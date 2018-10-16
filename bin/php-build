@@ -598,7 +598,7 @@ function configure_package() {
             [ -e "$(brew --prefix zlib)" ] && configure_option -R "--with-zlib-dir" "$(brew --prefix zlib)"
 
             if [ -e "$(brew --prefix openssl)" ]; then
-                configure_option -R "--with-openssl" "$(brew --prefix openssl)"
+                configure_option -R "--with-openssl"
                 configure_option -R "--with-openssl-dir" "$(brew --prefix openssl)"
             fi
 

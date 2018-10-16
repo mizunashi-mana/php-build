@@ -599,26 +599,25 @@ function configure_package() {
 
             [ -e "$(brew --prefix bison)" ] && export PATH="$(brew --prefix bison)/bin:$PATH"
 
-            [ -e "$(brew --prefix zlib)" ] && configure_option -R "--with-zlib-dir" "$(brew --prefix zlib)"
-
             if [ -e "$(brew --prefix openssl)" ]; then
                 configure_option -R "--with-openssl"
                 configure_option -R "--with-openssl-dir" "$(brew --prefix openssl)"
             fi
 
-            [ -e "$(brew --prefix bzip2)" ] && configure_option -R "--with-bz2" "$(brew --prefix bzip2)"
-            [ -e "$(brew --prefix curl)" ] && configure_option -R "--with-curl" "$(brew --prefix curl)"
-            [ -e "$(brew --prefix freetype)" ] && configure_option -R "--with-freetype-dir" "$(brew --prefix freetype)"
-            [ -e "$(brew --prefix gettext)" ] && configure_option -R "--with-gettext" "$(brew --prefix gettext)"
-            [ -e "$(brew --prefix gmp)" ]      && configure_option -R "--with-gmp"          "$(brew --prefix gmp)"
-            [ -e "$(brew --prefix jpeg)" ]     && configure_option -R "--with-jpeg-dir"     "$(brew --prefix jpeg)"
-            [ -e "$(brew --prefix libpng)" ]   && configure_option -R "--with-png-dir"      "$(brew --prefix libpng)"
-            [ -e "$(brew --prefix libxml2)" ] && configure_option -R "--with-libxml-dir" "$(brew --prefix libxml2)"
-            [ -e "$(brew --prefix libzip)" ]   && configure_option -R "--with-libzip"       "$(brew --prefix libzip)"
-            [ -e "$(brew --prefix mhash)" ]    && configure_option -R "--with-mhash"        "$(brew --prefix mhash)"
-            [ -e "$(brew --prefix pcre)" ]     && configure_option -R "--with-pcre-regex"   "$(brew --prefix pcre)"
-            [ -e "$(brew --prefix readline)" ] && configure_option -R "--with-readline" "$(brew --prefix readline)"
-            [ -e "$(brew --prefix webp)" ]     && configure_option -R "--with-webp-dir"     "$(brew --prefix webp)"
+            [ -e "$(brew --prefix bzip2)" ]    && configure_option -R "--with-bz2"           "$(brew --prefix bzip2)"
+            [ -e "$(brew --prefix curl)" ]     && configure_option -R "--with-curl"          "$(brew --prefix curl)"
+            [ -e "$(brew --prefix freetype)" ] && configure_option -R "--with-freetype-dir"  "$(brew --prefix freetype)"
+            [ -e "$(brew --prefix gettext)" ]  && configure_option -R "--with-gettext"       "$(brew --prefix gettext)"
+            [ -e "$(brew --prefix gmp)" ]      && configure_option -R "--with-gmp"           "$(brew --prefix gmp)"
+            [ -e "$(brew --prefix jpeg)" ]     && configure_option -R "--with-jpeg-dir"      "$(brew --prefix jpeg)"
+            [ -e "$(brew --prefix libpng)" ]   && configure_option -R "--with-png-dir"       "$(brew --prefix libpng)"
+            [ -e "$(brew --prefix libxml2)" ]  && configure_option -R "--with-libxml-dir"    "$(brew --prefix libxml2)"
+            [ -e "$(brew --prefix libzip)" ]   && configure_option -R "--with-libzip"        "$(brew --prefix libzip)"
+            [ -e "$(brew --prefix mhash)" ]    && configure_option -R "--with-mhash"         "$(brew --prefix mhash)"
+            [ -e "$(brew --prefix pcre)" ]     && configure_option -R "--with-pcre-regex"    "$(brew --prefix pcre)"
+            [ -e "$(brew --prefix readline)" ] && configure_option -R "--with-readline"      "$(brew --prefix readline)"
+            [ -e "$(brew --prefix webp)" ]     && configure_option -R "--with-webp-dir"      "$(brew --prefix webp)"
+            [ -e "$(brew --prefix zlib)" ]     && configure_option -R "--with-zlib-dir"      "$(brew --prefix zlib)"
 
             if [ -e "$(brew --prefix libpq)" ]; then
                 configure_option -R "--with-pgsql"     "$(brew --prefix libpq)"

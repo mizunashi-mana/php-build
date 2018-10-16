@@ -58,6 +58,16 @@ function realpath() {
     cd "$cwd"
 }
 
+function is_llvm {
+    local cc
+    if [ "$CC" ]; then
+        cc="$CC"
+    else
+        cc="cc"
+    fi
+    "$cc" --help | head -n 1 |grep -qi llvm
+}
+
 # Uses uname to check if php-build is run on OSX. This is used later on to
 # enable specifc fixes for OSX oddnesses in library file placement.
 function is_osx {

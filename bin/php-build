@@ -614,7 +614,7 @@ function configure_package() {
             [ -e "$(brew --prefix libxml2)" ]  && configure_option -R "--with-libxml-dir"    "$(brew --prefix libxml2)"
             [ -e "$(brew --prefix libzip)" ]   && configure_option -R "--with-libzip"        "$(brew --prefix libzip)"
             [ -e "$(brew --prefix mhash)" ]    && configure_option -R "--with-mhash"         "$(brew --prefix mhash)"
-            [ -e "$(brew --prefix pcre)" ]     && configure_option -R "--with-pcre-regex"    "$(brew --prefix pcre)"
+            [ -e "$(brew --prefix pcre)" ]     && configure_option -R "--with-pcre-dir"      "$(brew --prefix pcre)"
             [ -e "$(brew --prefix readline)" ] && configure_option -R "--with-readline"      "$(brew --prefix readline)"
             [ -e "$(brew --prefix webp)" ]     && configure_option -R "--with-webp-dir"      "$(brew --prefix webp)"
             [ -e "$(brew --prefix zlib)" ]     && configure_option -R "--with-zlib-dir"      "$(brew --prefix zlib)"

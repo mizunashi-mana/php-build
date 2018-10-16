@@ -593,6 +593,10 @@ function configure_package() {
 
         # Override libraries with homebrew versions
         if [ -n "$(which brew)" ]; then
+            export CPATH="$(brew --prefix)/include:$CPATH"
+            export LIBRARY_PATH="$(brew --prefix)/lib:$LIBRARY_PATH"
+            export LD_LIBRARY_PATH="$(brew --prefix)/lib:$LD_LIBRARY_PATH"
+
             [ -e "$(brew --prefix bison)" ] && export PATH="$(brew --prefix bison)/bin:$PATH"
 
             [ -e "$(brew --prefix zlib)" ] && configure_option -R "--with-zlib-dir" "$(brew --prefix zlib)"
